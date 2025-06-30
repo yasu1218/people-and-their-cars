@@ -27,7 +27,15 @@ const CarCard = props => {
       {/* Toggle between edit mode and view mode */}
       {/* If editMode is true, show the UpdateCar form; otherwise, show the Card  */}
       {editMode ? (
-        <UpdateCar/>
+        <UpdateCar
+          id={id}
+          year={year}
+          make={make}
+          model={model}
+          price={price}
+          personId={personId}
+          onButtonClick={handleButtonClick}
+        />
       ) : (
         <Card
           title={`${year} ${make} ${model} -> $${price}`}

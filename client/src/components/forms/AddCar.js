@@ -79,65 +79,66 @@ const AddCar = () => {
         layout='inline'
         onFinish={onFinish}
         size='large'
-        style={{ marginBottom: '40px'}}>
-          {/* ---------- Year ---------- */}
-          <Form.Item 
-            label="Year"
-            name='year' 
-            rules={[{ required: true, message: 'Please input the car model year!' }]}
-          >
-            <InputNumber placeholder='Year' />
-          </Form.Item>
-          {/* ---------- Make ---------- */}
-          <Form.Item 
-            label="Make"
-            name='make' 
-            rules={[{ required: true, message: 'Please input last make/manufacturer!' }]}
-          >
-            <Input placeholder='Make' />
-          </Form.Item>
-          {/* ---------- Model ---------- */}
-          <Form.Item 
-            label="Model"
-            name='model' 
-            rules={[{ required: true, message: 'Please input last model!' }]}
-          >
-            <Input placeholder='Model' />
-          </Form.Item>
-          {/* ---------- Price ---------- */}
-          <Form.Item 
-            label="Price"
-            name='price' 
-            rules={[{ required: true, message: 'Please input the price!' }]}
-          >
-            <InputNumber
-              formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              parser={value => value === null || value === void 0 ? void 0 : value.replace(/\$\s?|(,*)/g, '')}        
-            />
-          </Form.Item>
-          {/* ---------- Person ID ---------- */}
-          <Form.Item 
-            label="Person"
-            name='personId' 
-            rules={[{ required: true, message: 'Please select a person!' }]}
-          >
-            <PersonSelector/>
-          </Form.Item>
-          {/* ---------- Add Car Button ---------- */}
-          <Form.Item shouldUpdate={true}>
-            {() => (
-              <Button
-                type='primary'
-                htmlType='submit'
-                disabled={
-                  !form.isFieldsTouched(true) || 
-                  form.getFieldsError().filter(({ errors}) => errors.length).length
-                }
-              >
-                Add Car
-              </Button>
-            )}
-          </Form.Item>
+        style={{ marginBottom: '40px'}}
+      >
+        {/* ---------- Year ---------- */}
+        <Form.Item 
+          label="Year"
+          name='year' 
+          rules={[{ required: true, message: 'Please input the car model year!' }]}
+        >
+          <InputNumber placeholder='Year' />
+        </Form.Item>
+        {/* ---------- Make ---------- */}
+        <Form.Item 
+          label="Make"
+          name='make' 
+          rules={[{ required: true, message: 'Please input last make/manufacturer!' }]}
+        >
+          <Input placeholder='Make' />
+        </Form.Item>
+        {/* ---------- Model ---------- */}
+        <Form.Item 
+          label="Model"
+          name='model' 
+          rules={[{ required: true, message: 'Please input last model!' }]}
+        >
+          <Input placeholder='Model' />
+        </Form.Item>
+        {/* ---------- Price ---------- */}
+        <Form.Item 
+          label="Price"
+          name='price' 
+          rules={[{ required: true, message: 'Please input the price!' }]}
+        >
+          <InputNumber
+            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={value => value === null || value === void 0 ? void 0 : value.replace(/\$\s?|(,*)/g, '')}        
+          />
+        </Form.Item>
+        {/* ---------- Person ID ---------- */}
+        <Form.Item 
+          label="Person"
+          name='personId' 
+          rules={[{ required: true, message: 'Please select a person!' }]}
+        >
+          <PersonSelector/>
+        </Form.Item>
+        {/* ---------- Add Car Button ---------- */}
+        <Form.Item shouldUpdate={true}>
+          {() => (
+            <Button
+              type='primary'
+              htmlType='submit'
+              disabled={
+                !form.isFieldsTouched(true) || 
+                form.getFieldsError().filter(({ errors}) => errors.length).length
+              }
+            >
+              Add Car
+            </Button>
+          )}
+        </Form.Item>
       </Form>
     </div>
   )
