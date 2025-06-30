@@ -31,6 +31,10 @@ nvm use 20
 # Install dependencies for server side
 cd server
 npm install
+
+# Install dependencies for client side
+cd ../client
+npm install
 ```
 
 ### Start the app with nvm
@@ -46,7 +50,9 @@ nvm start
 #### Frontend client
 
 ```bash
-# To be updated
+# Start service
+cd client
+npm start
 ```
 
 ### Access the app
