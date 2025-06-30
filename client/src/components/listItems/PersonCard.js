@@ -3,6 +3,7 @@ import UpdatePerson from '../forms/UpdatePerson'
 import RemovePerson from '../buttons/RemovePerson'
 import { EditOutlined } from '@ant-design/icons'
 import { useState } from 'react'
+import CarCard from './CarCard'
 
 // ============================================================================
 // PersonCard Component
@@ -10,7 +11,7 @@ import { useState } from 'react'
 const PersonCard = props => {
 
   const [editMode, setEditMode] = useState(false) // State to toggle between edit mode and view mode
-  const { id, firstName, lastName } = props // Destructure props to get the person's id, first name, and last name
+  const { id, firstName, lastName, cars } = props // Destructure props to get the person's id, first name, and last name
 
   // ----------------------------------------------------------------
   // Function to toggle edit mode
@@ -35,6 +36,7 @@ const PersonCard = props => {
         />
       ) : (
         <Card
+          title={`${firstName} ${lastName}`}
           style={styles.card}
           actions={[
             <EditOutlined
@@ -46,7 +48,22 @@ const PersonCard = props => {
             <RemovePerson id={id} />
           ]}
         >
-          {firstName} {lastName}
+          {/* Loop through the cars owned by the person */}
+          {!cars || cars.length === 0 ? (
+            <p>No cars owned by this person.</p>
+          ) : (
+            cars.map( (car) => (
+              <CarCard 
+                key={car.id}
+                id={car.id}
+                year={car.year}
+                make={car.make}
+                model={car.model}
+                price={car.price}
+                personId={id}
+              />
+            ))
+          )}
         </Card>
       )}
     </div>
@@ -64,6 +81,7 @@ const getStyles = () => ({
   },
   card: {
     width: '100%',
-    borderColor: '#888'
+    borderColor: '#888',
+    backgroundColor: '#f0f0ff',
   }
 });

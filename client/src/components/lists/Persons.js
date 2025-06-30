@@ -26,10 +26,10 @@ const Persons = () => {
       <Divider style={styles.divider}>Records</Divider>
       {/* ---------- List of persons ---------- */}
       <List style={styles.list}>
-        {data.personsFull.map(({ id, firstName, lastName }) => (
+        {data.personsFull.map(({ id, firstName, lastName, cars }) => (
           <List.Item key={id} style={{ width: '100%' }}>
             {/* ---------- Individual Cards ---------- */}
-            <PersonCard id={id} firstName={firstName} lastName={lastName} />
+            <PersonCard id={id} firstName={firstName} lastName={lastName} cars={cars} />
           </List.Item>
         ))}
       </List>
