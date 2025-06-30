@@ -46,7 +46,7 @@ export const GET_PERSON = gql`
 // Query to get all persons (no cars, just the person details)
 export const GET_PERSONS_LIST = gql`
   query GetPersonsList {
-    persons {
+    personsList {
       id
       firstName
       lastName

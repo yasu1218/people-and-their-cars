@@ -47,7 +47,7 @@ const typeDefs = `
   type Query {
     personsFull: [Person]
     person(id: ID!): Person
-    personList: [Person]
+    personsList: [Person]
 
   }
 

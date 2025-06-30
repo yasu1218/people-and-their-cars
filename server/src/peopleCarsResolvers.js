@@ -36,9 +36,9 @@ const resolvers = {
       };
     },
     // ----------------------------------------------------
-    // personList: [Person]
+    // personsList: [Person]
     // Get id, firstName and lastName of all persons (no car information)
-    personList: () => {
+    personsList: () => {
       return people.map(person => ({
         id: person.id,
         firstName: person.firstName,

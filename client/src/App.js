@@ -3,6 +3,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import Title from './components/layout/Title';
 import AddPerson from './components/forms/AddPerson';
 import Persons from './components/lists/Persons';
+import AddCar from './components/forms/AddCar';
 
 // Define the Apollo Client to connect to the GraphQL server
 const client = new ApolloClient({
@@ -18,6 +19,7 @@ const App = () => {
       <div className='App'>
         <Title />
         <AddPerson />
+        <AddCar />
         <Persons />
       </div>
     </ApolloProvider>

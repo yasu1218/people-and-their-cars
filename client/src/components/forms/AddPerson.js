@@ -85,6 +85,7 @@ const AddPerson = () => {
           >
             <Input placeholder='Last name' />
           </Form.Item>
+          {/* ---------- Add Person button ---------- */}
           <Form.Item shouldUpdate={true}>
             {() => (
               <Button
