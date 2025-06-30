@@ -1,6 +1,6 @@
 import { DeleteOutlined} from '@ant-design/icons'
 import { useMutation } from '@apollo/client'
-import { GET_PERSONS, REMOVE_PERSON } from '../../graphql/queries'
+import { GET_PERSONS, REMOVE_PERSON, GET_PERSONS_LIST } from '../../graphql/queries'
 import filter from 'lodash.filter'
 
 // ============================================================================
@@ -23,7 +23,17 @@ const RemovePerson = ({ id }) => {
             return p.id !== removePerson.id
           })
         }
-      })
+      });
+      // Step 3: Update the cache for the list of persons
+      const { personsList } = cache.readQuery({ query: GET_PERSONS_LIST })
+      cache.writeQuery({
+        query: GET_PERSONS_LIST,
+        data: {
+          personsList: filter(personsList, p => {
+            return p.id !== removePerson.id
+          })
+        }
+      });
     }
   })
 
