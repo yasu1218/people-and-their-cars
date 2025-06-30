@@ -1,6 +1,6 @@
 import { DeleteOutlined} from '@ant-design/icons'
 import { useMutation } from '@apollo/client'
-//import { GET_PERSONS, REMOVE_PERSON } from '../../graphql/queries'
+import { GET_PERSONS, REMOVE_CAR } from '../../graphql/queries'
 import filter from 'lodash.filter'
 
 // ============================================================================
@@ -9,13 +9,40 @@ import filter from 'lodash.filter'
 const RemoveCar = ({ id }) => {
 
   // ----------------------------------------------------------------
-  // Define the mutation for removing a person
-  
+  // Define the mutation for removing a car
+  const [removeCar] = useMutation(REMOVE_CAR, {
+    update(cache, { data: { removeCar } }) {
+      // Update the cache after removing a car: 
+      // Step 1: Read the existing persons and cars from the cache
+      const { personsFull } = cache.readQuery({ query: GET_PERSONS })
+      // Step 2: Write the new persons & cars to the cache
+      cache.writeQuery({
+        query: GET_PERSONS,
+        data: {
+          personsFull: personsFull.map(person => {
+            // For each person, filter out the car that was removed
+            return {
+              ...person,
+              cars: filter(person.cars, car => car.id !== removeCar.id)
+            }
+          })
+        } 
+      })
+    }
+  });
 
   // ----------------------------------------------------------------
   // Function to handle the button click event
   const handleButtonClick = () => {
-    console.log('[DEBUG][RemoveCar] handleButtonClick called with id:', id);
+    // Show a confirmation dialog before deleting the person
+    let result = window.confirm('Are you sure you want to delete this car?')
+    // If the user confirms, call the removePerson mutation
+    if (result) {
+      console.log('Removing car with id:', id);
+      removeCar({
+        variables: { removeCarId : id }
+      })
+    }
   }
 
   // ----------------------------------------------------------------
