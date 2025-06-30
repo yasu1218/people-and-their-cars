@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client';
 import { Form, Input, Button, Divider } from 'antd';
 import { useEffect, useState } from 'react';
 
-import { ADD_PERSON, GET_PERSONS } from '../../graphql/queries';
+import { ADD_PERSON, GET_PERSONS, GET_PERSONS_LIST } from '../../graphql/queries';
 
 // ============================================================================
 // AddPerson Component
@@ -17,6 +17,7 @@ const AddPerson = () => {
 
   // Define the mutation for adding a new person
   const [addPerson] = useMutation(ADD_PERSON);
+
 
   // Use the useEffect hook to force a re-render when the component mounts
   useEffect(() => {
@@ -49,8 +50,28 @@ const AddPerson = () => {
             personsFull: [...data.personsFull, addPerson], // Append the new person to the existing list
           }
         });
+
+        // Also update the GET_PERSONS_LIST cache
+        try {
+          const existing = cache.readQuery({ query: GET_PERSONS_LIST });
+
+          if (existing?.personsList) {
+            cache.writeQuery({
+              query: GET_PERSONS_LIST,
+              data: {
+                personsList: [...existing.personsList, addPerson]
+              }
+            });
+          }
+        } catch (error) {
+          console.warn('Unable to update cache for GET_PERSONS_LIST:', error.message);
+        }
       }
-    })
+    });
+
+    // Reset the form fields after submission
+    form.resetFields();
+    
   };
 
   // ----------------------------------------------------------------
