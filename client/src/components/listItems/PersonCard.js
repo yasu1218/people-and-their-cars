@@ -4,6 +4,7 @@ import RemovePerson from '../buttons/RemovePerson'
 import { EditOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import CarCard from './CarCard'
+import { Link } from 'react-router-dom'
 
 // ============================================================================
 // PersonCard Component
@@ -48,7 +49,7 @@ const PersonCard = props => {
             <RemovePerson id={id} />
           ]}
         >
-          {/* Loop through the cars owned by the person */}
+          {/* ---------- Loop through the cars owned by the person ---------- */}
           {!cars || cars.length === 0 ? (
             <p>No cars owned by this person.</p>
           ) : (
@@ -64,6 +65,10 @@ const PersonCard = props => {
               />
             ))
           )}
+          {/* ---------- Link to the Show (details) screen ---------- */}
+          <Link to={`/people/${id}`}>
+            <p style={{ color: '#1890ff' }}>Learn More</p>
+          </Link>
         </Card>
       )}
     </div>

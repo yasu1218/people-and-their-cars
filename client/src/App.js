@@ -1,9 +1,10 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import Title from './components/layout/Title';
-import AddPerson from './components/forms/AddPerson';
-import Persons from './components/lists/Persons';
-import AddCar from './components/forms/AddCar';
+
+// Import screens
+import Home from './screens/Home';
+import Show from './screens/Show';
 
 // Define the Apollo Client to connect to the GraphQL server
 const client = new ApolloClient({
@@ -16,12 +17,12 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <div className='App'>
-        <Title />
-        <AddPerson />
-        <AddCar />
-        <Persons />
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/people/:id" element={<Show />} />
+        </Routes>
+      </Router>
     </ApolloProvider>
 
   )

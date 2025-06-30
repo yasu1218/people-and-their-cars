@@ -25,7 +25,7 @@ export const GET_PERSONS = gql`
 // ==================================================================
 // Query to get one person and the cars owned by that person
 export const GET_PERSON = gql`
-  query GetPerson($id: String!) {
+  query GetPerson($id: ID!) {
     person(id: $id) {
       id
       firstName
