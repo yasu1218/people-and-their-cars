@@ -6,7 +6,10 @@ A simple web app built with Apollo, GraphQL, Express.js and React.js to manage l
 
 ## Features
 
-- to be updated
+- Create, read, update and delete person data (first name, last name)
+- Create, read, update and delete car data belonging to a person (year, make, model, price, owner)
+- View list of people and their cars, where all information can be edited or deleted
+- View details of one person in a separate read-only details page
 
 ---
 
@@ -74,6 +77,7 @@ npm start
       /listItems              # List item (card) components
       /lists                  # List components
     /graphql                  # GraphQL queries
+    /screens                  # Screens
     App.css                   # General styles
     App.js                    # Client application
 /server
@@ -88,7 +92,7 @@ npm start
 
 ## Future Improvements
 
-- To be updated
+- Integration with an actual database
 
 ---
 
