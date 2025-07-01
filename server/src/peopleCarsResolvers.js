@@ -45,6 +45,14 @@ const resolvers = {
         lastName: person.lastName
       }));
     },
+    // ----------------------------------------------------
+    // carsList: [Car]
+    // Get all cars data
+    carsList: () => {
+      return cars.map(car => ({
+        ...car
+      }));
+    }
   },
   // ================================================================
   // Mutations: 

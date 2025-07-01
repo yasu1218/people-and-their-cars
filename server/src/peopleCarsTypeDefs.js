@@ -12,6 +12,8 @@
  *      - Usage: To display the "Person details" page (from the "Learn more" link).
  *    - personList: Fetch all persons without their cars.
  *      - Usage: For the "add car" / "update car" form, where the available persons are to be shown as a dropdown.
+ *    - carsList: Fetch all cars data.
+ *      - Usage: This is not used in the UI, but it is used for viewing the cars data alone in the GraphQL playground.
  *
  *  Mutations:
  *    - addPerson: Add a new person with first name and last name.
@@ -48,7 +50,7 @@ const typeDefs = `
     personsFull: [Person]
     person(id: ID!): Person
     personsList: [Person]
-
+    carsList: [Car]
   }
 
   type Mutation {

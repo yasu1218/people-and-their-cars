@@ -24,15 +24,22 @@ const Persons = () => {
     <div style={styles.container}>
       {/* ---------- Divider for the Records section ---------- */}
       <Divider style={styles.divider}>Records</Divider>
-      {/* ---------- List of persons ---------- */}
-      <List style={styles.list}>
-        {data.personsFull.map(({ id, firstName, lastName, cars }) => (
-          <List.Item key={id} style={{ width: '100%' }}>
-            {/* ---------- Individual Cards ---------- */}
-            <PersonCard id={id} firstName={firstName} lastName={lastName} cars={cars} />
-          </List.Item>
-        ))}
-      </List>
+      {/* Display message if no person is available. Otherwise show the list of persons. */}
+      {data.personsFull.length === 0 ? (
+        <p style={{ textAlign: 'center', marginTop: '20px' }}>
+          No persons registered. Please register a person first.
+        </p>
+      ) : (
+      // {/* ---------- List of persons ---------- */}
+        <List style={styles.list}>
+          {data.personsFull.map(({ id, firstName, lastName, cars }) => (
+            <List.Item key={id} style={{ width: '100%' }}>
+              {/* ---------- Individual Cards ---------- */}
+              <PersonCard id={id} firstName={firstName} lastName={lastName} cars={cars} />
+            </List.Item>
+          ))}
+        </List>
+      )}
     </div>
   )
 }

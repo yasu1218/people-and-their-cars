@@ -1,8 +1,9 @@
 import { useMutation } from '@apollo/client';
 import { Form, Input, InputNumber, Button, Divider } from 'antd';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
 
-import { ADD_CAR, GET_PERSONS } from '../../graphql/queries';
+import { ADD_CAR, GET_PERSONS, GET_PERSONS_LIST } from '../../graphql/queries';
 import PersonSelector from './PersonSelector';
 
 
@@ -69,6 +70,16 @@ const AddCar = () => {
     form.resetFields();
   };
 
+
+  // ----------------------------------------------------------------
+  // Check if there are any persons in the database
+
+  // Fetch the list of persons to determine if any person exists
+  const { loading, error, data } = useQuery(GET_PERSONS_LIST);
+  if (loading) return 'Loading...';
+  if (error) return `[ERROR][AddCar]Error loading people: ${error.message}`;
+  const persons = data?.personsList || [];
+  
   // ----------------------------------------------------------------
   // Render the form for adding a new car
   const styles = getStyles();
@@ -76,83 +87,88 @@ const AddCar = () => {
     <div style={styles.container}>
       {/* ---------- Heading divider ---------- */}      
       <Divider style={styles.divider}>Add Car</Divider>
-      {/* ---------- Form ---------- */}
-      <Form
-        form={form}
-        name='add-car-form'
-        layout='inline'
-        onFinish={onFinish}
-        size='large'
-        style={{ marginBottom: '40px'}}
-      >
-        {/* ---------- Year ---------- */}
-        <Form.Item 
-          label="Year"
-          name='year' 
-          rules={[{ required: true, message: 'Please input the car model year.' }]}
-          style={styles.formItem}
+      {/* Display message if no person is available. Otherwise show the form. */}
+      { persons.length === 0 ? (
+        <p>Please add a person first before adding a car.</p>
+      ) : (
+        // {/* ---------- Form ---------- */}
+        <Form
+          form={form}
+          name='add-car-form'
+          layout='inline'
+          onFinish={onFinish}
+          size='large'
+          style={{ marginBottom: '40px'}}
         >
-          <InputNumber placeholder='Year' />
-        </Form.Item>
-        {/* ---------- Make ---------- */}
-        <Form.Item 
-          label="Make"
-          name='make' 
-          rules={[{ required: true, message: 'Please input last make/manufacturer.' }]}
-          style={styles.formItem}
-        >
-          <Input placeholder='Make' />
-        </Form.Item>
-        {/* ---------- Model ---------- */}
-        <Form.Item 
-          label="Model"
-          name='model' 
-          rules={[{ required: true, message: 'Please input last model.' }]}
-          style={styles.formItem}
-        >
-          <Input placeholder='Model' />
-        </Form.Item>
-        {/* ---------- Price ---------- */}
-        <Form.Item 
-          label="Price"
-          name='price' 
-          rules={[{ required: true, message: 'Please input the price.' }]}
-          style={styles.formItem}
-        >
-          <InputNumber
-            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value === null || value === void 0 ? void 0 : value.replace(/\$\s?|(,*)/g, '')}
-            style={styles.priceInput}
-          />
-        </Form.Item>
-        {/* ---------- Person ID ---------- */}
-        <Form.Item 
-          label="Person"
-          name='personId' 
-          rules={[{ required: true, message: 'Please select a person.' }]}
-          style={styles.formItem}
-        >
-          <PersonSelector/>
-        </Form.Item>
-        {/* ---------- Add Car Button ---------- */}
-        <Form.Item 
-          shouldUpdate={true}
-          style={styles.formItem}
-        >
-          {() => (
-            <Button
-              type='primary'
-              htmlType='submit'
-              disabled={
-                !form.isFieldsTouched(true) || 
-                form.getFieldsError().filter(({ errors}) => errors.length).length
-              }
-            >
-              Add Car
-            </Button>
-          )}
-        </Form.Item>
-      </Form>
+          {/* ---------- Year ---------- */}
+          <Form.Item 
+            label="Year"
+            name='year' 
+            rules={[{ required: true, message: 'Please input the car model year.' }]}
+            style={styles.formItem}
+          >
+            <InputNumber placeholder='Year' />
+          </Form.Item>
+          {/* ---------- Make ---------- */}
+          <Form.Item 
+            label="Make"
+            name='make' 
+            rules={[{ required: true, message: 'Please input last make/manufacturer.' }]}
+            style={styles.formItem}
+          >
+            <Input placeholder='Make' />
+          </Form.Item>
+          {/* ---------- Model ---------- */}
+          <Form.Item 
+            label="Model"
+            name='model' 
+            rules={[{ required: true, message: 'Please input last model.' }]}
+            style={styles.formItem}
+          >
+            <Input placeholder='Model' />
+          </Form.Item>
+          {/* ---------- Price ---------- */}
+          <Form.Item 
+            label="Price"
+            name='price' 
+            rules={[{ required: true, message: 'Please input the price.' }]}
+            style={styles.formItem}
+          >
+            <InputNumber
+              formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={value => value === null || value === void 0 ? void 0 : value.replace(/\$\s?|(,*)/g, '')}
+              style={styles.priceInput}
+            />
+          </Form.Item>
+          {/* ---------- Person ID ---------- */}
+          <Form.Item 
+            label="Person"
+            name='personId' 
+            rules={[{ required: true, message: 'Please select a person.' }]}
+            style={styles.formItem}
+          >
+            <PersonSelector/>
+          </Form.Item>
+          {/* ---------- Add Car Button ---------- */}
+          <Form.Item 
+            shouldUpdate={true}
+            style={styles.formItem}
+          >
+            {() => (
+              <Button
+                type='primary'
+                htmlType='submit'
+                disabled={
+                  !form.isFieldsTouched(true) || 
+                  form.getFieldsError().filter(({ errors}) => errors.length).length
+                }
+              >
+                Add Car
+              </Button>
+            )}
+          </Form.Item>
+        </Form>
+      )}
     </div>
   )
 }

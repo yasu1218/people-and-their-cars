@@ -34,7 +34,11 @@ const RemovePerson = ({ id }) => {
           })
         }
       });
-      // Step 4: Evict entry from cache (seems to be optional, but adding to get rid of console warnings)
+      // Step 4: Evict entry of each car associated with the removed person (if any)
+      removePerson.cars?.forEach(car => {
+        cache.evict({ id: `Car:${car.id}` });
+      });
+      // Step 5: Evict entry from cache (seems to be optional, but adding to get rid of console warnings)
       cache.evict({ id: `Person:${removePerson.id}` });
     }
   })
