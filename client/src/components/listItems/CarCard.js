@@ -27,29 +27,23 @@ const CarCard = props => {
       {/* Toggle between edit mode and view mode */}
       {/* If editMode is true, show the UpdateCar form; otherwise, show the Card  */}
       {editMode ? (
-        <UpdateCar
-          id={id}
-          year={year}
-          make={make}
-          model={model}
-          price={price}
-          personId={personId}
-          onButtonClick={handleButtonClick}
-        />
+        <Card style={styles.card}>
+          <UpdateCar
+            id={id}
+            year={year}
+            make={make}
+            model={model}
+            price={price}
+            personId={personId}
+            onButtonClick={handleButtonClick}
+          />
+        </Card>
       ) : (
         <Card
-          title={`${year} ${make} ${model} -> $${price}`}
+          title={`${year} ${make} ${model} -> ${new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', }).format(price)}`}
           style={styles.card}
           actions={[
-            <EditOutlined
-              id={id}
-              year={year}
-              make={make}
-              model={model}
-              price={price}
-              personId={personId}
-              onClick={handleButtonClick}
-            />,
+            <EditOutlined onClick={handleButtonClick} />,
             <RemoveCar id={id} />
           ]}
         >

@@ -51,7 +51,8 @@ const UpdatePerson = props => {
         <Form.Item
           label='First Name'
           name='firstName'
-          rules={[{ required: true, message: 'Please enter a first name' }]}
+          rules={[{ required: true, message: 'Please enter a first name.' }]}
+          style={styles.formItem}
         >
           <Input placeholder='First name' />
         </Form.Item>
@@ -59,12 +60,16 @@ const UpdatePerson = props => {
         <Form.Item 
           label='Last Name'
           name='lastName' 
-          rules={[{ required: true, message: 'Please enter a last name' }]}
+          rules={[{ required: true, message: 'Please enter a last name.' }]}
+          style={styles.formItem}
         >
           <Input placeholder='Last name' />
         </Form.Item>
         {/* ---------- Update button ---------- */}      
-        <Form.Item shouldUpdate={true}>
+        <Form.Item 
+          shouldUpdate={true}
+          style={styles.formItem}
+        >
           {() => (
             <Button
               type='primary'
@@ -98,5 +103,9 @@ const getStyles = () => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  formItem: {
+    marginRight: '30px',
+    marginBottom: '15px',
   },
 });

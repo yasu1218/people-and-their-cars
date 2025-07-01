@@ -12,11 +12,13 @@ import Persons from '../components/lists/Persons';
 // a form to add a new person, a form to add a new car, and a list of persons.
 const Home = () => {
 
+  const pageTitle = 'People and Their Cars'; // Title text
+
   // ----------------------------------------------------------------
   // Render the Home screen
   return (
       <div className='App'>
-        <Title />
+        <Title title={pageTitle} />
         <AddPerson />
         <AddCar />
         <Persons />

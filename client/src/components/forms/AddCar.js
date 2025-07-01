@@ -31,6 +31,7 @@ const AddCar = () => {
     const { year, make, model, price, personId} = values;
     console.log('year, make, model, price, personId', year, make, model, price, personId);
 
+    // Call the addCar mutation with the form values & update the cache
     addCar({
       variables: {
         year,
@@ -62,7 +63,10 @@ const AddCar = () => {
           }
         });
       }
-    })
+    });
+
+    // Reset the form fields after submission
+    form.resetFields();
   };
 
   // ----------------------------------------------------------------
@@ -85,7 +89,8 @@ const AddCar = () => {
         <Form.Item 
           label="Year"
           name='year' 
-          rules={[{ required: true, message: 'Please input the car model year!' }]}
+          rules={[{ required: true, message: 'Please input the car model year.' }]}
+          style={styles.formItem}
         >
           <InputNumber placeholder='Year' />
         </Form.Item>
@@ -93,7 +98,8 @@ const AddCar = () => {
         <Form.Item 
           label="Make"
           name='make' 
-          rules={[{ required: true, message: 'Please input last make/manufacturer!' }]}
+          rules={[{ required: true, message: 'Please input last make/manufacturer.' }]}
+          style={styles.formItem}
         >
           <Input placeholder='Make' />
         </Form.Item>
@@ -101,7 +107,8 @@ const AddCar = () => {
         <Form.Item 
           label="Model"
           name='model' 
-          rules={[{ required: true, message: 'Please input last model!' }]}
+          rules={[{ required: true, message: 'Please input last model.' }]}
+          style={styles.formItem}
         >
           <Input placeholder='Model' />
         </Form.Item>
@@ -109,23 +116,29 @@ const AddCar = () => {
         <Form.Item 
           label="Price"
           name='price' 
-          rules={[{ required: true, message: 'Please input the price!' }]}
+          rules={[{ required: true, message: 'Please input the price.' }]}
+          style={styles.formItem}
         >
           <InputNumber
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value === null || value === void 0 ? void 0 : value.replace(/\$\s?|(,*)/g, '')}        
+            parser={value => value === null || value === void 0 ? void 0 : value.replace(/\$\s?|(,*)/g, '')}
+            style={styles.priceInput}
           />
         </Form.Item>
         {/* ---------- Person ID ---------- */}
         <Form.Item 
           label="Person"
           name='personId' 
-          rules={[{ required: true, message: 'Please select a person!' }]}
+          rules={[{ required: true, message: 'Please select a person.' }]}
+          style={styles.formItem}
         >
           <PersonSelector/>
         </Form.Item>
         {/* ---------- Add Car Button ---------- */}
-        <Form.Item shouldUpdate={true}>
+        <Form.Item 
+          shouldUpdate={true}
+          style={styles.formItem}
+        >
           {() => (
             <Button
               type='primary'
@@ -163,5 +176,12 @@ const getStyles = () => ({
     borderColor: '#888',
     fontSize: '20px',
     fontWeight: 'bold',
+  },
+  formItem: {
+    marginRight: '30px',
+    marginBottom: '15px',
+  },
+  priceInput: {
+    minWidth: '130px',
   },
 }); 

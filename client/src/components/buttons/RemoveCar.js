@@ -4,8 +4,8 @@ import { GET_PERSONS, REMOVE_CAR } from '../../graphql/queries'
 import filter from 'lodash.filter'
 
 // ============================================================================
-// RemovePerson Component
-// This component provides a button to remove a person from the list of persons.
+// RemoveCar Component
+// This component provides a button to remove a car from the database.
 const RemoveCar = ({ id }) => {
 
   // ----------------------------------------------------------------
@@ -14,7 +14,7 @@ const RemoveCar = ({ id }) => {
     update(cache, { data: { removeCar } }) {
       // Update the cache after removing a car: 
       // Step 1: Read the existing persons and cars from the cache
-      const { personsFull } = cache.readQuery({ query: GET_PERSONS })
+      const { personsFull } = cache.readQuery({ query: GET_PERSONS });
       // Step 2: Write the new persons & cars to the cache
       cache.writeQuery({
         query: GET_PERSONS,
@@ -27,7 +27,9 @@ const RemoveCar = ({ id }) => {
             }
           })
         } 
-      })
+      });
+      // Step 3: Evict the car entry from cache (seems to be optional, but adding to get rid of console warnings)
+      cache.evict({ id: cache.identify({ __typename: 'Car', id: removeCar.id }) });
     }
   });
 

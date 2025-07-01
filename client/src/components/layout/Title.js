@@ -3,9 +3,7 @@ import { Divider } from 'antd';
 // ============================================================================
 // Title Component
 // This component renders the title of the application.
-const Title = () => {
-
-  const title = 'People and Their Cars'; // Title text
+const Title = ({title}) => {
 
   // ----------------------------------------------------------------
   // Render the app title area

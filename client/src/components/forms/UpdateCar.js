@@ -47,6 +47,8 @@ const UpdateCar = props => {
               if (oldPersonId.current !== personId) {
                 // Case 1A: If the person matches the previous personId, remove the car from the previous person.
                 if (person.id === oldPersonId.current) {
+                  // Evict the car entry from cache to ensure it is updated correctly for the oldPersonId, if the personId has changed
+                  cache.evict({ id: cache.identify({ __typename: 'Car', id }) });
                   return {
                     ...person,
                     cars: person.cars.filter(car => car.id !== id) // Remove the car from the previous person
@@ -107,6 +109,7 @@ const UpdateCar = props => {
           label="Year"
           name='year' 
           rules={[{ required: true, message: 'Please input the car model year' }]}
+          style={styles.formItem}
         >
           <InputNumber placeholder='Year' />
         </Form.Item>
@@ -115,6 +118,7 @@ const UpdateCar = props => {
           label="Make"
           name='make' 
           rules={[{ required: true, message: 'Please input last make/manufacturer' }]}
+          style={styles.formItem}
         >
           <Input placeholder='Make' />
         </Form.Item>
@@ -123,6 +127,7 @@ const UpdateCar = props => {
           label="Model"
           name='model' 
           rules={[{ required: true, message: 'Please input last model!' }]}
+          style={styles.formItem}
         >
           <Input placeholder='Model' />
         </Form.Item>
@@ -131,10 +136,12 @@ const UpdateCar = props => {
           label="Price"
           name='price' 
           rules={[{ required: true, message: 'Please input the price!' }]}
+          style={styles.formItem}
         >
           <InputNumber
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value === null || value === void 0 ? void 0 : value.replace(/\$\s?|(,*)/g, '')}        
+            parser={value => value === null || value === void 0 ? void 0 : value.replace(/\$\s?|(,*)/g, '')}
+            style={styles.priceInput}
           />
         </Form.Item>
         {/* ---------- Person ID ---------- */}
@@ -142,11 +149,15 @@ const UpdateCar = props => {
           label="Person"
           name='personId' 
           rules={[{ required: true, message: 'Please select a person!' }]}
+          style={styles.formItem}
         >
           <PersonSelector personId={personId}/>
         </Form.Item>
         {/* ---------- Submit button ---------- */}
-        <Form.Item shouldUpdate={true}>
+        <Form.Item 
+          shouldUpdate={true}
+          style={styles.formItem}
+        >
           {() => (
             <Button
               type='primary'
@@ -182,5 +193,12 @@ const getStyles = () => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  formItem: {
+    marginRight: '30px',
+    marginBottom: '15px',
+  },
+  priceInput: {
+    minWidth: '130px',
   },
 });

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { Card, Spin, Typography } from 'antd';
+import { Card, Spin } from 'antd';
 import { GET_PERSON } from '../graphql/queries';
-
-const { Title, Text } = Typography;
+import Title from '../components/layout/Title';
+import Cars from '../components/lists/Cars';
 
 // ============================================================================
 // Show Screen
@@ -22,28 +22,37 @@ const Show = () => {
 
   const { firstName, lastName, cars } = data.person;
 
+  const pageTitle = `${firstName} ${lastName}`; // Title text
+
   // ----------------------------------------------------------------
   // Render the Show screen 
-  // TODO: Update the styles
+  const styles = getStyles();
   return (
-    <div style={{ padding: 24 }}>
-      <Title level={2}>{firstName} {lastName}</Title>
-      <Title level={4}>Cars</Title>
-      {cars.length === 0 ? (
-        <Text type="secondary">No cars owned.</Text>
+    <div className="App">
+      {/* ---------- Heading ---------- */}
+      <Title title={pageTitle} />
+      {/* ---------- List of cars ---------- */}
+      { cars.length === 0 ? (
+        <p>{`${firstName} ${lastName}`} does not own any car.</p>
       ) : (
-        cars.map(car => (
-          <Card key={car.id} style={{ marginBottom: 12 }}>
-            <div>{car.year} {car.make} {car.model}</div>
-            <div>${car.price.toFixed(2)}</div>
-          </Card>
-        ))
+        <Cars cars={cars} />
       )}
-      <Link to="/">
-        <Text type="primary">Back to Home</Text>
+      {/* ---------- Link to main screen ---------- */}
+      <Link to={`/`} style={styles.linkStyle}>
+        <p style={{ color: '#1890ff' }}>GO BACK HOME</p>
       </Link>
     </div>
   );
 };
 
 export default Show;
+
+// ============================================================================
+// Styles for the component
+const getStyles = () => ({
+  linkStyle: {
+    marginTop: '20px',
+    textDecoration: 'none',
+    color: '#1890ff',
+  },
+});

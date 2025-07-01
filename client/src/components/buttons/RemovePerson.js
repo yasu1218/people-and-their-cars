@@ -34,6 +34,8 @@ const RemovePerson = ({ id }) => {
           })
         }
       });
+      // Step 4: Evict entry from cache (seems to be optional, but adding to get rid of console warnings)
+      cache.evict({ id: `Person:${removePerson.id}` });
     }
   })
 

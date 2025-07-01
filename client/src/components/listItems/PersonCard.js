@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 const PersonCard = props => {
 
   const [editMode, setEditMode] = useState(false) // State to toggle between edit mode and view mode
-  const { id, firstName, lastName, cars } = props // Destructure props to get the person's id, first name, and last name
+  const { id, firstName, lastName, cars } = props // Destructure props to get the person's id, first name, last name, and array of cars
 
   // ----------------------------------------------------------------
   // Function to toggle edit mode
@@ -29,29 +29,26 @@ const PersonCard = props => {
       {/* Toggle between edit mode and view mode */}
       {/* If editMode is true, show the UpdatePerson form; otherwise, show the Card  */}
       {editMode ? (
-        <UpdatePerson
-          id={id}
-          firstName={firstName}
-          lastName={lastName}
-          onButtonClick={handleButtonClick}
-        />
+        <Card style={styles.card}>
+          <UpdatePerson
+            id={id}
+            firstName={firstName}
+            lastName={lastName}
+            onButtonClick={handleButtonClick}
+          />
+        </Card>
       ) : (
         <Card
           title={`${firstName} ${lastName}`}
           style={styles.card}
           actions={[
-            <EditOutlined
-              id={id}
-              firstName={firstName}
-              lastName={lastName}
-              onClick={handleButtonClick}
-            />,
+            <EditOutlined onClick={handleButtonClick}/>,
             <RemovePerson id={id} />
           ]}
         >
           {/* ---------- Loop through the cars owned by the person ---------- */}
           {!cars || cars.length === 0 ? (
-            <p>No cars owned by this person.</p>
+            <p>{`${firstName} ${lastName}`} does not own any car.</p>
           ) : (
             cars.map( (car) => (
               <CarCard 
@@ -67,7 +64,7 @@ const PersonCard = props => {
           )}
           {/* ---------- Link to the Show (details) screen ---------- */}
           <Link to={`/people/${id}`}>
-            <p style={{ color: '#1890ff' }}>Learn More</p>
+            <p style={{ color: '#1890ff' }}>LEARN MORE</p>
           </Link>
         </Card>
       )}
